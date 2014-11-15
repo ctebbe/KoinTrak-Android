@@ -19,7 +19,7 @@ public class Main extends ListActivity {
         super.onCreate(savedInstanceState);
 
         Address address = new Address();
-        address.setAddress("test address");
+        address.setAddress("1BZtK1FWw2nF5mm6mFYXvbZ2z98XbPq2Lw");
         AddressField[] values = new AddressField[] {
             new AddressField(Network.DOGE, address, 1.0),
             new AddressField(Network.BTC, address, 1.0),
