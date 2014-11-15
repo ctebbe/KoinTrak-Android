@@ -1,13 +1,9 @@
 package com.plutolabs.kointrak.address;
 
 import android.app.ListActivity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import com.plutolabs.kointrak.AddressListUpdaterService;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.RegisterStatus;
@@ -17,7 +13,6 @@ import so.chain.entity.AddressBalance;
 import so.chain.entity.Network;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
@@ -100,30 +95,6 @@ public class Main extends ListActivity {
 
     private void updateTotalAssets(Network network, double confirmedBalance) {
         // TODO update total assets box
-    }
-
-    private class ResponseReceiver extends BroadcastReceiver {
-
-        private ResponseReceiver() {
-        }
-
-        // Called when the BroadcastReceiver gets an Intent it's registered to receive
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(AddressListUpdaterService.UPDATE_ADDRESS_ENTRY_BROADCAST_ACTION)) {
-                AddressBalance balance = (AddressBalance) intent.getSerializableExtra(AddressListUpdaterService.UPDATE_ADDRESS_ENTRY_BROADCAST_KEY);
-                // TODO find and update the entry corresponding to this address and network
-                for (AddressField field : listItems) {
-                    if (field.getIcon().equals(balance.getNetwork())
-                            && field.getAddress().equals(balance.getAddress())) {
-                        double confirmedBalance = Double.valueOf(balance.getConfirmedBalance());
-                        field.setBalance(confirmedBalance);
-                        adapter.notifyDataSetChanged();
-                        break;
-                    }
-                }
-            }
-        }
-
     }
 
     private class RegisterWalletTask extends AsyncTask<String, Void, AddressBalance> {
