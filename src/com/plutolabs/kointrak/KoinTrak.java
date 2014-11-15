@@ -12,6 +12,8 @@ public interface KoinTrak {
 
     public RegisterStatus registerWallet(String address);
 
+    public Address getAddress(Network network, String address);
+
     public AddressBalance getAddressBalance(Network network, String address);
 
     public AddressBalance getAddressBalance(Network network, Address address);

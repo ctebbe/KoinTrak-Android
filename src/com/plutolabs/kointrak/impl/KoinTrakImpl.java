@@ -15,9 +15,6 @@ import java.util.Set;
 
 public class KoinTrakImpl implements KoinTrak {
 
-    // TODO remove *TEST networks from Network enum in SoChain. For now, just iterate over POSSIBLE_NETWORKS.
-    public static final Network[] POSSIBLE_NETWORKS = new Network[] { Network.BTC, Network.DOGE, Network.LTC };
-
     private static KoinTrakImpl instance;
 
     private final SoChainImpl soChain;
@@ -52,6 +49,13 @@ public class KoinTrakImpl implements KoinTrak {
         }
     }
 
+    public Address getAddress(Network network, String addressString) {
+        try {
+            return soChain.getAddress(network, addressString);
+        } catch (IOException e) {}
+        return null;
+    }
+
     @Override
     public AddressBalance getAddressBalance(Network network, String address) {
         try {
@@ -81,7 +85,7 @@ public class KoinTrakImpl implements KoinTrak {
 
     private Network isValidAddress(String address) {
         Network validNetwork = null;
-        for (Network network : POSSIBLE_NETWORKS) {
+        for (Network network : Network.values()) {
             try {
                 AddressValid addressValid = soChain.getAddressValid(network, address);
                 if (addressValid.isValid()) {
@@ -95,12 +99,7 @@ public class KoinTrakImpl implements KoinTrak {
     }
 
     private RegisterStatus registerWallet(Network network, String addressString) {
-        Address address = null;
-        try {
-            address = soChain.getAddress(network, addressString);
-        } catch (IOException e) {
-            return new RegisterStatus(createUnknownErrorMessage(network, addressString));
-        }
+        Address address = getAddress(network, addressString);
 
         if (address != null) {
             Set<Address> registeredAddresses = this.registeredAddresses.get(network);
@@ -120,7 +119,7 @@ public class KoinTrakImpl implements KoinTrak {
     }
 
     private String createAddressNotInSupportedNetworkErrorMessage(String address) {
-        return "Wallet Address \'" + address + "\' " + " is not a valid address on supported networks: " + prettyPrintArray(POSSIBLE_NETWORKS);
+        return "Wallet Address \'" + address + "\' " + " is not a valid address on supported networks: " + prettyPrintArray(Network.values());
     }
 
     /**
@@ -134,8 +133,7 @@ public class KoinTrakImpl implements KoinTrak {
         String delim = ", ";
         StringBuilder builder = new StringBuilder("[");
         for (Network network : networks) {
-            // TODO change to network.getName() once jar is rebuilt.
-            builder.append(delim + network.toString());
+            builder.append(delim + network.getName());
         }
         builder.append("]");
         return builder.toString().replaceFirst(delim, "");

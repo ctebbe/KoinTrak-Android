@@ -8,11 +8,10 @@ import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.RegisterStatus;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
-import so.chain.entity.Address;
-import so.chain.entity.AddressBalance;
-import so.chain.entity.Network;
+import so.chain.entity.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -78,7 +77,11 @@ public class Main extends ListActivity {
         AddressField field = new AddressField(network, addressBalance.getAddress(), confirmedBalance);
         adapter.add(field);
         adapter.notifyDataSetChanged();
-        updateTotalAssets(network, confirmedBalance);
+        updateTotalWorth();
+    }
+
+    private void updateTotalWorth() {
+        new CalculateTotalWorthTask().execute();
     }
 
     private void updateAddressBalance(AddressBalance balance) {
@@ -93,8 +96,11 @@ public class Main extends ListActivity {
         }
     }
 
-    private void updateTotalAssets(Network network, double confirmedBalance) {
-        // TODO update total assets box
+    private void calculateTotalWorth(List<PriceQuery> rates) {
+//        double totalWorth = 0.0;
+//        for (PriceQuery rate : rates) {
+//            totalWorth += rate.
+//        }
     }
 
     private class RegisterWalletTask extends AsyncTask<String, Void, AddressBalance> {
@@ -130,6 +136,26 @@ public class Main extends ListActivity {
         @Override
         protected void onPostExecute(AddressBalance balance) {
             updateAddressBalance(balance);
+        }
+
+    }
+
+    private class CalculateTotalWorthTask extends AsyncTask<Void, Void, List<PriceQuery>> {
+
+        @Override
+        protected List<PriceQuery> doInBackground(Void... ignore) {
+            Network[] values = Network.values();
+            ArrayList rates = new ArrayList(values.length);
+            for (Network network : values) {
+                PriceQuery exchangeRate = koinTrak.getExchangeRate(network);
+                rates.add(exchangeRate);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<PriceQuery> rates) {
+            calculateTotalWorth(rates);
         }
 
     }
