@@ -46,7 +46,7 @@ public class Main extends ListActivity {
         listItems = new ArrayList<AddressField>();
 //        listItems.addAll(Arrays.asList(sampleValues));
 
-        AddressArrayAdapter adapter = new AddressArrayAdapter(this, R.layout.address, listItems);
+        adapter = new AddressArrayAdapter(this, R.layout.address, listItems);
         setListAdapter(adapter);
 
         koinTrak = KoinTrakImpl.getInstance();
