@@ -158,7 +158,7 @@ public class Main extends ListActivity {
                 PriceQuery exchangeRate = koinTrak.getExchangeRate(network);
                 rates.add(exchangeRate);
             }
-            return null;
+            return rates;
         }
 
         @Override
