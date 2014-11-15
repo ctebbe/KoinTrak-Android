@@ -1,6 +1,7 @@
 package com.plutolabs.kointrak.impl;
 
 import com.plutolabs.kointrak.KoinTrak;
+import com.plutolabs.kointrak.RegisterStatus;
 import io.shapeshift.api.ShapeShiftImpl;
 import so.chain.SoChainImpl;
 import so.chain.entity.*;
@@ -38,10 +39,10 @@ public class KoinTrakImpl implements KoinTrak {
 
 
     @Override
-    public String registerWallet(String address) {
+    public RegisterStatus registerWallet(String address) {
         Network network = isValidAddress(address);
         if (network == null) {
-            return createAddressNotInSupportedNetworkErrorMessage(address);
+            return new RegisterStatus(createAddressNotInSupportedNetworkErrorMessage(address));
         }
         else {
             return registerWallet(network, address);
@@ -49,12 +50,16 @@ public class KoinTrakImpl implements KoinTrak {
     }
 
     @Override
-    public AddressBalance getAddressBalance(Network network, Address address) {
+    public AddressBalance getAddressBalance(Network network, String address) {
         try {
-            return soChain.getAddressBalance(network, address.getAddress());
+            return soChain.getAddressBalance(network, address);
         } catch (IOException e) {
             return null;
         }
+    }
+    @Override
+    public AddressBalance getAddressBalance(Network network, Address address) {
+       return getAddressBalance(network, address.getAddress());
     }
 
     @Override
@@ -86,12 +91,12 @@ public class KoinTrakImpl implements KoinTrak {
         return validNetwork;
     }
 
-    private String registerWallet(Network network, String addressString) {
+    private RegisterStatus registerWallet(Network network, String addressString) {
         Address address = null;
         try {
             address = soChain.getAddress(network, addressString);
         } catch (IOException e) {
-            return createUnknownErrorMessage(network, addressString);
+            return new RegisterStatus(createUnknownErrorMessage(network, addressString));
         }
 
         if (address != null) {
@@ -100,11 +105,15 @@ public class KoinTrakImpl implements KoinTrak {
                 registeredAddresses = new HashSet<Address>();
             }
             registeredAddresses.add(address);
-            return network + " Wallet Address '" + addressString + "\' was successfully registered.";
+            return new RegisterStatus(createSuccessfulRegisterMessage(network, addressString), address);
         }
         else {
-            return createUnknownErrorMessage(network, addressString);
+            return new RegisterStatus(createUnknownErrorMessage(network, addressString));
         }
+    }
+
+    private String createSuccessfulRegisterMessage(Network network, String addressString) {
+        return network + " Wallet Address '" + addressString + "\' was successfully registered.";
     }
 
     private String createAddressNotInSupportedNetworkErrorMessage(String address) {
