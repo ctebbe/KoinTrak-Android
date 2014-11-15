@@ -1,8 +1,14 @@
 package com.plutolabs.kointrak.transactions;
 
 import android.app.ListActivity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
@@ -10,7 +16,10 @@ import so.chain.entity.Address;
 import so.chain.entity.Network;
 import so.chain.entity.Transaction;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,7 +53,8 @@ public class TransactionActivity extends ListActivity {
         setListAdapter(adapter);
         */
         String[] sampleAddresses = new String[] {
-                "13p5iQkqBEVgKmPeJqEL2LBRS44PjX1dZL",
+                "1GheiHDiAnmYo3sE5czpPbV7u5MNeUAqFC",
+                //13p5iQkqBEVgKmPeJqEL2LBRS44PjX1dZL
         };
         adapter = new TransactionArrayAdapter(this, R.layout.transaction, new ArrayList<Transaction>());
         setListAdapter(adapter);
@@ -58,6 +68,7 @@ public class TransactionActivity extends ListActivity {
             adapter.notifyDataSetChanged();
         }
     }
+
 
     private class TransactionTask extends AsyncTask<String, Void, List<Transaction>> {
 

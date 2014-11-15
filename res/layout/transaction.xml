@@ -16,47 +16,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:clickable="true"
-                android:weightSum="4">
+                android:clickable="true">
             <TextView
                     android:id="@+id/transaction_id"
                     android:clickable="true"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="fill_parent"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:textSize="20sp"
                     android:text="test"
                     android:layout_marginRight="6dip"
-                    android:gravity="center"
-                    android:layout_weight="1" />
+                    android:gravity="center"/>
             <TextView
                     android:id="@+id/time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="20sp"
                     android:layout_marginRight="6dip"
-                    android:text="test"
-                    android:layout_weight="1"/>
+                    android:text="test"/>
             <TextView
                     android:id="@+id/confirmations"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="20sp"
                     android:layout_marginRight="6dip"
-                    android:text="test"
-                    android:layout_weight="1"/>
+                    android:text="test"/>
             <TextView
                     android:id="@+id/value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="20sp"
                     android:layout_marginRight="6dip"
-                    android:text="test"
-                    android:layout_weight="1"/>
+                    android:text="test"/>
         </TableRow>
     </LinearLayout>
 </ScrollView>
