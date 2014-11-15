@@ -98,11 +98,13 @@ public class Main extends ListActivity {
 
     private void calculateTotalWorth(List<PriceQuery> rates) {
         double totalWorth = 0.0;
-        for (PriceQuery query : rates) {
-            ArrayList<Price> differentExchanges = query.getPrices();
-            if (differentExchanges.size() > 0) {
-                // grab the first one for now
-                totalWorth += Double.valueOf(differentExchanges.get(0).getPrice());
+        if (rates != null) {
+            for (PriceQuery query : rates) {
+                ArrayList<Price> differentExchanges = query.getPrices();
+                if (differentExchanges.size() > 0) {
+                    // grab the first one for now
+                    totalWorth += Double.valueOf(differentExchanges.get(0).getPrice());
+                }
             }
         }
 
