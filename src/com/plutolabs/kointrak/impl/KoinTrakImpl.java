@@ -3,6 +3,7 @@ package com.plutolabs.kointrak.impl;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.RegisterStatus;
 import io.shapeshift.api.ShapeShiftImpl;
+import so.chain.impl.SoChainImpl;
 import so.chain.entity.*;
 import so.chain.impl.SoChainImpl;
 

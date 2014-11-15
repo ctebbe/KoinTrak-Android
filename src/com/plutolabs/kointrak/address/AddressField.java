@@ -9,10 +9,10 @@ import so.chain.entity.Network;
 public class AddressField {
 
     private final Network icon;
-    private final Address address;
+    private final String address;
     private double balance;
 
-    public AddressField(Network network, Address address, double balance) {
+    public AddressField(Network network, String address, double balance) {
         this.icon = network;
         this.address = address;
         this.balance = balance;
@@ -22,7 +22,7 @@ public class AddressField {
         return icon;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
