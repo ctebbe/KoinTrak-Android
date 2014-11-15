@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import so.chain.entity.Network;
 
 /**
@@ -31,6 +32,12 @@ public class AddressArrayAdapter  extends ArrayAdapter<AddressField> {
 
         TextView addressView = (TextView) view.findViewById(R.id.address);
         addressView.setText(values[position].address.getAddress());
+        addressView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "clicked", Toast.LENGTH_LONG).show();
+            }
+        });
         TextView balanceView = (TextView) view.findViewById(R.id.balance);
         balanceView.setText(String.valueOf(values[position].balance));
 

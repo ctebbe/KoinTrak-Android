@@ -3,8 +3,6 @@ package com.plutolabs.kointrak;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
 import so.chain.entity.Address;
 import so.chain.entity.AddressBalance;
@@ -17,6 +15,7 @@ public class Main extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(android.R.id.list);
 
         Address address = new Address();
         address.setAddress("1BZtK1FWw2nF5mm6mFYXvbZ2z98XbPq2Lw");
@@ -25,14 +24,12 @@ public class Main extends ListActivity {
             new AddressField(Network.BTC, address, 1.0),
             new AddressField(Network.LTC, address, 1.0)
         };
+
+        // set up custom adapter
         AddressArrayAdapter adapter = new AddressArrayAdapter(this,R.layout.address,values);
         setListAdapter(adapter);
-        koinTrak = KoinTrakImpl.getInstance();
-    }
 
-    @Override protected void onListItemClick(ListView lv, View v, int position, long id) {
-        String item = (String) getListAdapter().getItem(position);
-        Toast.makeText(this, item, Toast.LENGTH_LONG).show();
+        koinTrak = KoinTrakImpl.getInstance();
     }
 
     public void registerAddress(View view) {
@@ -52,5 +49,4 @@ public class Main extends ListActivity {
         // update address field
         String balance = addressBalance.getConfirmedBalance() + " " + addressBalance.getNetwork(); // update balance box
     }
-
 }
