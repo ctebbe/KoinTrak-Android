@@ -3,9 +3,8 @@ package com.plutolabs.kointrak.impl;
 import com.plutolabs.kointrak.KoinTrak;
 import io.shapeshift.api.ShapeShiftImpl;
 import so.chain.SoChainImpl;
-import so.chain.entity.Address;
-import so.chain.entity.AddressValid;
-import so.chain.entity.Network;
+import so.chain.entity.*;
+import so.chain.entity.Currency;
 
 import java.io.IOException;
 import java.util.*;
@@ -49,6 +48,29 @@ public class KoinTrakImpl implements KoinTrak {
         }
     }
 
+    @Override
+    public AddressBalance getAddressBalance(Network network, Address address) {
+        try {
+            return soChain.getAddressBalance(network, address.getAddress());
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public PriceQuery getExchangeRate(Network network) {
+        try {
+            return soChain.getPrice(network, Currency.USD);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Map<Network, Set<Address>> getRegisteredAddresses() {
+        return registeredAddresses;
+    }
+
     private Network isValidAddress(String address) {
         Network validNetwork = null;
         for (Network network : POSSIBLE_NETWORKS) {
@@ -83,10 +105,6 @@ public class KoinTrakImpl implements KoinTrak {
         else {
             return createUnknownErrorMessage(network, addressString);
         }
-    }
-
-    public Map<Network, Set<Address>> getRegisteredAddresses() {
-        return registeredAddresses;
     }
 
     private String createAddressNotInSupportedNetworkErrorMessage(String address) {
