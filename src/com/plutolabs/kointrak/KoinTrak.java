@@ -10,7 +10,9 @@ import java.util.Set;
 
 public interface KoinTrak {
 
-    public String registerWallet(String address);
+    public RegisterStatus registerWallet(String address);
+
+    public AddressBalance getAddressBalance(Network network, String address);
 
     public AddressBalance getAddressBalance(Network network, Address address);
 
