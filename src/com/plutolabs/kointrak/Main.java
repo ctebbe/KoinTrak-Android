@@ -84,8 +84,15 @@ public class Main extends ListActivity {
             if (intent.getAction().equals(AddressListUpdaterService.UPDATE_ADDRESS_ENTRY_BROADCAST_ACTION)) {
                 AddressBalance balance = (AddressBalance) intent.getSerializableExtra(AddressListUpdaterService.UPDATE_ADDRESS_ENTRY_BROADCAST_KEY);
                 // TODO find and update the entry corresponding to this address and network
-//                adapter.get
-                adapter.notifyDataSetChanged();
+                for (AddressField field : listItems) {
+                    if (field.getIcon().equals(balance.getNetwork())
+                            && field.getAddress().getAddress().equals(balance.getAddress())) {
+                        double confirmedBalance = Double.valueOf(balance.getConfirmedBalance());
+                        field.setBalance(confirmedBalance);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
         }
 
