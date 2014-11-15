@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import so.chain.entity.Network;
 
+import java.util.ArrayList;
+
 /**
  * @author ct.
  */
@@ -17,9 +19,9 @@ public class AddressArrayAdapter  extends ArrayAdapter<AddressField> {
 
     private final int resource;
     private final Context context;
-    private final AddressField[] values;
+    private final ArrayList<AddressField> values;
 
-    public AddressArrayAdapter(Context context, int resource, AddressField[] values) {
+    public AddressArrayAdapter(Context context, int resource, ArrayList<AddressField> values) {
         super(context, resource, values);
         this.context = context;
         this.values = values;
@@ -31,18 +33,19 @@ public class AddressArrayAdapter  extends ArrayAdapter<AddressField> {
         View view = inflater.inflate(resource, parent, false);
 
         TextView addressView = (TextView) view.findViewById(R.id.address);
-        addressView.setText(values[position].address.getAddress());
+        addressView.setText(values.get(position).address.getAddress());
         addressView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "clicked", Toast.LENGTH_LONG).show();
             }
         });
+        addressView.setText(values.get(position).address.getAddress());
         TextView balanceView = (TextView) view.findViewById(R.id.balance);
-        balanceView.setText(String.valueOf(values[position].balance));
+        balanceView.setText(String.valueOf(values.get(position).balance));
 
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
-        icon.setImageResource(findIcon(values[position].icon));
+        icon.setImageResource(findIcon(values.get(position).icon));
 
         return view;
     }
