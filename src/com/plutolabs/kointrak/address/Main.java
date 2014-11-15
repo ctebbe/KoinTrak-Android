@@ -18,6 +18,8 @@ import so.chain.entity.Network;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
 
 public class Main extends ListActivity {
 
@@ -65,6 +67,15 @@ public class Main extends ListActivity {
         }
     }
 
+    public void updateAllAddresses(View view) {
+        Map<Network, Set<Address>> registeredAddresses = koinTrak.getRegisteredAddresses();
+        for (Map.Entry<Network, Set<Address>> entry : registeredAddresses.entrySet()) {
+            for (Address address : entry.getValue()) {
+                new UpdateWalletTask().execute(address);
+            }
+        }
+    }
+
     private synchronized void createAddressListEntry(AddressBalance addressBalance) {
         Network network = addressBalance.getNetwork();
 
@@ -75,11 +86,22 @@ public class Main extends ListActivity {
         updateTotalAssets(network, confirmedBalance);
     }
 
+    private void updateAddressBalance(AddressBalance balance) {
+        for (AddressField field : listItems) {
+            if (field.getIcon().equals(balance.getNetwork())
+                    && field.getAddress().equals(balance.getAddress())) {
+                double confirmedBalance = Double.valueOf(balance.getConfirmedBalance());
+                field.setBalance(confirmedBalance);
+                adapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
     private void updateTotalAssets(Network network, double confirmedBalance) {
         // TODO update total assets box
     }
 
-    // Broadcast receiver for receiving status updates from the IntentService
     private class ResponseReceiver extends BroadcastReceiver {
 
         private ResponseReceiver() {
@@ -121,6 +143,22 @@ public class Main extends ListActivity {
         @Override
         protected void onPostExecute(AddressBalance balance) {
             createAddressListEntry(balance);
+        }
+
+    }
+
+    private class UpdateWalletTask extends AsyncTask<Address, Void, AddressBalance> {
+
+        @Override
+        protected AddressBalance doInBackground(Address... addresses) {
+            Address address = addresses[0];
+            AddressBalance addressBalance = koinTrak.getAddressBalance(address.getNetwork(), address);
+            return addressBalance;
+        }
+
+        @Override
+        protected void onPostExecute(AddressBalance balance) {
+            updateAddressBalance(balance);
         }
 
     }
