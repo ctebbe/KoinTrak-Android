@@ -97,10 +97,16 @@ public class Main extends ListActivity {
     }
 
     private void calculateTotalWorth(List<PriceQuery> rates) {
-//        double totalWorth = 0.0;
-//        for (PriceQuery rate : rates) {
-//            totalWorth += rate.
-//        }
+        double totalWorth = 0.0;
+        for (PriceQuery query : rates) {
+            ArrayList<Price> differentExchanges = query.getPrices();
+            if (differentExchanges.size() > 0) {
+                // grab the first one for now
+                totalWorth += Double.valueOf(differentExchanges.get(0).getPrice());
+            }
+        }
+
+        // TODO update the actual field but it does not exist yet
     }
 
     private class RegisterWalletTask extends AsyncTask<String, Void, AddressBalance> {
