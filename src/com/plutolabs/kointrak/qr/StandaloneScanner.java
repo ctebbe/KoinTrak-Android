@@ -1,4 +1,4 @@
-package com.plutolabs.kointrak;
+package com.plutolabs.kointrak.qr;
 
 import com.plutolabs.kointrak.qr.*;
 import android.os.Bundle;
