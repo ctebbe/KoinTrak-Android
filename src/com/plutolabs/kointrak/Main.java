@@ -16,7 +16,6 @@ public class Main extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.main);
 
         Address address = new Address();
         address.setAddress("test address");
@@ -27,6 +26,7 @@ public class Main extends ListActivity {
         };
         ArrayAdapter<AddressField> adapter = new ArrayAdapter<AddressField>(this,R.layout.address,values);
         setListAdapter(adapter);
+        setContentView(R.layout.main);
     }
 
     @Override protected void onListItemClick(ListView lv, View v, int position, long id) {
