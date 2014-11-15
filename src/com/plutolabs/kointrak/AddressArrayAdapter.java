@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * @author ct.
  */
-public class AddressArrayAdapter  extends ArrayAdapter<AddressField> {
+public class AddressArrayAdapter extends ArrayAdapter<AddressField> {
 
     private final int resource;
     private final Context context;
