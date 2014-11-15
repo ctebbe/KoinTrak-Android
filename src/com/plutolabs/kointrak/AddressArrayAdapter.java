@@ -32,7 +32,7 @@ public class AddressArrayAdapter  extends ArrayAdapter<AddressField> {
         TextView addressView = (TextView) view.findViewById(R.id.address);
         addressView.setText(values[position].address.getAddress());
         TextView balanceView = (TextView) view.findViewById(R.id.balance);
-        balanceView.setText((int) values[position].balance);
+        balanceView.setText(String.valueOf(values[position].balance));
 
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
         icon.setImageResource(findIcon(values[position].icon));

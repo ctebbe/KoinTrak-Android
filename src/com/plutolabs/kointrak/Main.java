@@ -3,7 +3,6 @@ package com.plutolabs.kointrak;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
@@ -26,7 +25,7 @@ public class Main extends ListActivity {
             new AddressField(Network.BTC, address, 1.0),
             new AddressField(Network.LTC, address, 1.0)
         };
-        ArrayAdapter<AddressField> adapter = new ArrayAdapter<AddressField>(this,R.layout.address,values);
+        AddressArrayAdapter adapter = new AddressArrayAdapter(this,R.layout.address,values);
         setListAdapter(adapter);
         koinTrak = KoinTrakImpl.getInstance();
     }
