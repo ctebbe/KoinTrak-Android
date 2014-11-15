@@ -3,6 +3,8 @@ package com.plutolabs.kointrak;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
+import com.plutolabs.kointrak.address.AddressArrayAdapter;
+import com.plutolabs.kointrak.address.AddressField;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
 import so.chain.entity.Address;
 import so.chain.entity.AddressBalance;

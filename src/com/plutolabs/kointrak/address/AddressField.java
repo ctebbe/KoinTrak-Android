@@ -1,4 +1,4 @@
-package com.plutolabs.kointrak;
+package com.plutolabs.kointrak.address;
 
 import so.chain.entity.Address;
 import so.chain.entity.Network;
