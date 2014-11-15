@@ -34,19 +34,19 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressField> {
         View view = inflater.inflate(resource, parent, false);
 
         TextView addressView = (TextView) view.findViewById(R.id.address);
-        addressView.setText(values.get(position).address.getAddress());
+        addressView.setText(values.get(position).getAddress().getAddress());
         addressView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "clicked", Toast.LENGTH_LONG).show();
             }
         });
-        addressView.setText(values.get(position).address.getAddress());
+        addressView.setText(values.get(position).getAddress().getAddress());
         TextView balanceView = (TextView) view.findViewById(R.id.balance);
-        balanceView.setText(String.valueOf(values.get(position).balance));
+        balanceView.setText(String.valueOf(values.get(position).getBalance()));
 
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
-        icon.setImageResource(findIcon(values.get(position).icon));
+        icon.setImageResource(findIcon(values.get(position).getIcon()));
 
         return view;
     }

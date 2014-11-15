@@ -3,12 +3,14 @@ package com.plutolabs.kointrak.impl;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.RegisterStatus;
 import io.shapeshift.api.ShapeShiftImpl;
-import so.chain.SoChainImpl;
 import so.chain.entity.*;
-import so.chain.entity.Currency;
+import so.chain.impl.SoChainImpl;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class KoinTrakImpl implements KoinTrak {
 
