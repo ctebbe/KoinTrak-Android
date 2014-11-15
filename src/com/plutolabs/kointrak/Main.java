@@ -31,31 +31,39 @@ public class Main extends ListActivity {
         super.onCreate(savedInstanceState);
         //setContentView(android.R.id.list);
 
-        Address address = new Address();
-        address.setAddress("1BZtK1FWw2nF5mm6mFYXvbZ2z98XbPq2Lw");
-        AddressField[] sampleValues = new AddressField[] {
-            new AddressField(Network.DOGE, address, 1.0),
-            new AddressField(Network.BTC, address, 1.0),
-            new AddressField(Network.LTC, address, 1.0)
-        };
+//        Address address = new Address();
+//        address.setAddress("1BZtK1FWw2nF5mm6mFYXvbZ2z98XbPq2Lw");
+//        AddressField[] sampleValues = new AddressField[] {
+//            new AddressField(Network.DOGE, address, 1.0),
+//            new AddressField(Network.BTC, address, 1.0),
+//            new AddressField(Network.LTC, address, 1.0)
+//        };
 
         // set up custom adapter
         listItems = new ArrayList<AddressField>();
-        listItems.addAll(Arrays.asList(sampleValues));
+//        listItems.addAll(Arrays.asList(sampleValues));
 
         AddressArrayAdapter adapter = new AddressArrayAdapter(this, R.layout.address, listItems);
         setListAdapter(adapter);
 
         koinTrak = KoinTrakImpl.getInstance();
+        registerAddress(null);
     }
 
     public void registerAddress(View view) {
-        String addressString = null; // get address input
-        RegisterStatus status = koinTrak.registerWallet(addressString);
-        // display message to user
-        Address address = status.getAddress();
-        if (address != null) {
-            createAddressListEntry(address);
+        String[] sampleAddresses = new String[] {
+                "16sNuq9KhPqypikeaLDQiQKTj1qekGrYf9",
+                "13p5iQkqBEVgKmPeJqEL2LBRS44PjX1dZL",
+                "DMqRVLrhbam3Kcfddpxd6EYvEBbpi3bEpP",
+                "LTsUmTPBKV5U7pjhSjPC9fV5puyC3esiHP"
+        };
+        for (String sampleAddress : sampleAddresses) {
+            RegisterStatus status = koinTrak.registerWallet(sampleAddress);
+            // display message to user
+            Address address = status.getAddress();
+            if (address != null) {
+                createAddressListEntry(address);
+            }
         }
     }
 
