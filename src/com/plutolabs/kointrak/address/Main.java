@@ -1,4 +1,4 @@
-package com.plutolabs.kointrak;
+package com.plutolabs.kointrak.address;
 
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import com.plutolabs.kointrak.address.AddressArrayAdapter;
-import com.plutolabs.kointrak.address.AddressField;
+import com.plutolabs.kointrak.AddressListUpdaterService;
+import com.plutolabs.kointrak.KoinTrak;
+import com.plutolabs.kointrak.R;
+import com.plutolabs.kointrak.RegisterStatus;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
 import so.chain.entity.Address;
 import so.chain.entity.AddressBalance;
