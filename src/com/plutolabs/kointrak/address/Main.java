@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -128,20 +127,24 @@ public class Main extends ListActivity {
                 break;
             }
         }
+        updateTotalWorth();
     }
 
     private void calculateTotalWorth(List<PriceQuery> rates) {
         double totalWorth = 0.0;
         if (rates != null) {
+            Toast.makeText(this, "rates size: " + rates.size(), Toast.LENGTH_LONG).show();
             for (PriceQuery query : rates) {
                 ArrayList<Price> differentExchanges = query.getPrices();
                 if (differentExchanges.size() > 0) {
                     // grab the first one for now
                     totalWorth += Double.valueOf(differentExchanges.get(0).getPrice());
+                    Toast.makeText(this, "total worth is: " + totalWorth + ", ", Toast.LENGTH_LONG).show();
                 }
             }
         }
         this.totalWorth = totalWorth;
+        updateTotalWorth();
     }
 
     public void switchToTransactionActivity(AddressField addressField) {
