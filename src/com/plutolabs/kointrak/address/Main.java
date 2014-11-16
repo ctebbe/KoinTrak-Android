@@ -4,6 +4,9 @@ import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.RegisterStatus;
@@ -18,6 +21,7 @@ import java.util.Set;
 public class Main extends ListActivity {
 
     private KoinTrak koinTrak;
+    private double totalWorth;
 
     //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
     private ArrayList<AddressField> listItems;
@@ -28,16 +32,7 @@ public class Main extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(android.R.id.list);
-
-//        Address address = new Address();
-//        address.setAddress("1BZtK1FWw2nF5mm6mFYXvbZ2z98XbPq2Lw");
-//        AddressField[] sampleValues = new AddressField[] {
-//            new AddressField(Network.DOGE, address, 1.0),
-//            new AddressField(Network.BTC, address, 1.0),
-//            new AddressField(Network.LTC, address, 1.0)
-//        };
-
+        setContentView(R.layout.main);
         // set up custom adapter
         listItems = new ArrayList<AddressField>();
 //        listItems.addAll(Arrays.asList(sampleValues));
@@ -47,6 +42,22 @@ public class Main extends ListActivity {
 
         koinTrak = KoinTrakImpl.getInstance();
         registerAddress(null);
+
+        ListView lv = getListView();
+        lv.setAdapter(adapter);
+        View footer = getLayoutInflater().inflate(R.layout.address_footer,null);
+        lv.addFooterView(footer);
+
+        ((ImageView) findViewById(R.id.add_address)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputAddress();
+            }
+        });
+    }
+
+    private void inputAddress() {
+        
     }
 
     public void registerAddress(View view) {
@@ -82,6 +93,8 @@ public class Main extends ListActivity {
 
     private void updateTotalWorth() {
         new CalculateTotalWorthTask().execute();
+        TextView tv = (TextView) findViewById(R.id.total_txt);
+        tv.setText(String.valueOf(totalWorth));
     }
 
     private void updateAddressBalance(AddressBalance balance) {
@@ -107,8 +120,7 @@ public class Main extends ListActivity {
                 }
             }
         }
-
-        // TODO update the actual field but it does not exist yet
+        this.totalWorth = totalWorth;
     }
 
     private class RegisterWalletTask extends AsyncTask<String, Void, AddressBalance> {
