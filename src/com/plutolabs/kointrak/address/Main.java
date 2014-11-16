@@ -57,7 +57,7 @@ public class Main extends ListActivity {
     }
 
     private void inputAddress() {
-        
+
     }
 
     public void registerAddress(View view) {

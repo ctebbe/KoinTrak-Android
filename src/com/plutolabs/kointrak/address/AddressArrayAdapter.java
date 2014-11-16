@@ -56,8 +56,13 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressField> {
 
     static DecimalFormat df = new DecimalFormat("#.########");
     private String balanceFormatter(double balance) {
-        if(balance >= 0.0) return String.format("%6.2f",balance);
-        else return df.format(balance);//String.format("%6.8f",balance);
+        if(balance > 0.0) {
+            return String.format("%6.2f", balance);
+        } else if (balance == 0.0){
+            return String.format("%1.2f", balance);
+        } else {
+            return df.format(balance);//String.format("%6.8f",balance);
+        }
     }
 
     private int findIcon(Network network) {
