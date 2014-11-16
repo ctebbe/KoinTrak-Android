@@ -53,7 +53,7 @@ public class TransactionActivity extends ListActivity {
         setListAdapter(adapter);
         */
         String[] sampleAddresses = new String[] {
-                "1GheiHDiAnmYo3sE5czpPbV7u5MNeUAqFC",
+                "DDQHoA86j2YSAiDF2QkKCUq5XXQaK1qCjs",
                 //13p5iQkqBEVgKmPeJqEL2LBRS44PjX1dZL
         };
         adapter = new TransactionArrayAdapter(this, R.layout.transaction, new ArrayList<Transaction>());
@@ -74,7 +74,7 @@ public class TransactionActivity extends ListActivity {
 
         @Override
         protected List<Transaction> doInBackground(String... sampleAddresses) {
-            Address address = koinTrak.getAddress(Network.BTC, sampleAddresses[0]);
+            Address address = koinTrak.getAddress(Network.DOGE, sampleAddresses[0]);
             if (address != null) {
                 return address.getTxs();
             }

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">KoinTrak</string>
+    <string name="dogeLogo">\u00d0</string>
+    <string name="bitcoinLogo">\u0E3F</string>
+    <string name="litecoinLogo">\u0141</string>
 </resources>
