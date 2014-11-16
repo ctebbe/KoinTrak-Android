@@ -108,7 +108,7 @@ public class Main extends ListActivity {
 //        }
         for (String Addr : addresses) {
             new RegisterWalletTask().execute(Addr);
-            Toast toast = Toast.makeText(this,"Adding "+Addr, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this,"Adding "+Addr+" from KoinTrak cloud.", Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -136,7 +136,8 @@ public class Main extends ListActivity {
     private void updateTotalWorth() {
         new CalculateTotalWorthTask().execute();
         TextView tv = (TextView) findViewById(R.id.total_txt);
-        tv.setText(String.format("%0.2f", totalWorth));
+        tv.setText(String.format("$%.2f USD",totalWorth));
+        //tv.setText(String.format("%0.2f", totalWorth));
     }
 
     private void updateAddressBalance(AddressBalance balance) {
