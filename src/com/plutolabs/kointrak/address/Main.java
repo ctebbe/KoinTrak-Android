@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,18 +53,25 @@ public class Main extends ListActivity {
         View footer = getLayoutInflater().inflate(R.layout.address_footer,null);
         lv.addFooterView(footer);
 
-        ((ImageView) findViewById(R.id.add_address)).setOnClickListener(new View.OnClickListener() {
+        ImageView addAddress = ((ImageView) findViewById(R.id.add_address));
+        addAddress.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                inputAddress();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    buttonClick(v);
+                }
+                return false;
             }
         });
 
-        
-        findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
+        ImageView refereshView = ((ImageView) findViewById(R.id.refresh));
+        refereshView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                updateAllAddresses();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    buttonClick(v);
+                }
+                return false;
             }
         });
     }
@@ -73,10 +81,11 @@ public class Main extends ListActivity {
     }
 
     public void buttonClick(View v) {
-        Toast.makeText(v.getContext(), "refreshed", Toast.LENGTH_LONG).show();
         switch(v.getId()) {
             case R.id.refresh:
-                Toast.makeText(v.getContext(), "refreshed", Toast.LENGTH_LONG).show();
+                updateAllAddresses();
+            case R.id.add_address:
+                Toast.makeText(v.getContext(), "add_address", Toast.LENGTH_LONG).show();
         }
     }
 
