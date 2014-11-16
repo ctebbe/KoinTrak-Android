@@ -23,6 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="buttonClick"
             android:src="@drawable/blueplus" />
 
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_width="124dip"
             android:layout_marginTop="5dip"
+            android:clickable="true"
             android:onClick="buttonClick"
             android:layout_gravity="center_horizontal"
             android:layout_centerHorizontal="true"
