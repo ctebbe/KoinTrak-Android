@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.RegisterStatus;
+import com.plutolabs.kointrak.api.AddressImport;
+import com.plutolabs.kointrak.api.KoinTrakAPIImpl;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
 import com.plutolabs.kointrak.transactions.TransactionActivity;
 import so.chain.entity.*;
@@ -46,7 +48,9 @@ public class Main extends ListActivity {
         setListAdapter(adapter);
 
         koinTrak = KoinTrakImpl.getInstance();
-        registerAddress(null);
+        //registerAddress(null, null);
+
+        new APITask().execute("450581");
 
         ListView lv = getListView();
         lv.setAdapter(adapter);
@@ -92,16 +96,22 @@ public class Main extends ListActivity {
         }
     }
 
-    public void registerAddress(View view) {
+
+
+    public void registerAddress(View view, ArrayList<String> addresses) {
         String[] sampleAddresses = new String[] {
-                "16sNuq9KhPqypikeaLDQiQKTj1qekGrYf9",
-                "13p5iQkqBEVgKmPeJqEL2LBRS44PjX1dZL",
-                "DMqRVLrhbam3Kcfddpxd6EYvEBbpi3bEpP",
-                "LTsUmTPBKV5U7pjhSjPC9fV5puyC3esiHP"
+                //"1AhTjUMztCihiTyA4K6E3QEpobjWLwKhkR"
+                "1AhTjUMztCihiTyA4K6E3QEpobjWLwKhkR","1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY","16sNuq9KhPqypikeaLDQiQKTj1qekGrYf9","13p5iQkqBEVgKmPeJqEL2LBRS44PjX1dZL","1GZwCeoCyU7brDfayRiXLP6bnVDwyvaegP","1M4vL7mvrKcG2mHas11snsbpktXtqNYJiD","1CjPR7Z5ZSyWk6WtXvSFgkptmpoi4UM9BC","LTsUmTPBKV5U7pjhSjPC9fV5puyC3esiHP","LRWghxxUVo8vDZ6jf3uNUeqD35hPL1Xvem","LXYZ7kotvjodt1bd2CbMPi24ktZwBMcrpv","LfHsbL5kvyrKHZyk391B4tfay6uAyMrhxr","D8EyEfuNsfQ3root9R3ac54mMcLmoNBW6q","DDTtqnuZ5kfRT5qh2c7sNtqrJmV3iXYdGG","D6defLv3odMN5wmUyMxMzyDKJ3SRYR6Nqr","DMqRVLrhbam3Kcfddpxd6EYvEBbpi3bEpP","DEaSQxoeQarU6Si3uJp2rjfqN7b6UxkS9W"
         };
-        for (String sampleAddress : sampleAddresses) {
-            new RegisterWalletTask().execute(sampleAddress);
+//        for(String Addr: sampleAddresses){
+//            new RegisterWalletTask().execute(Addr);
+//        }
+        for (String Addr : addresses) {
+            new RegisterWalletTask().execute(Addr);
+            Toast toast = Toast.makeText(this,"Adding "+Addr, Toast.LENGTH_SHORT);
+            toast.show();
         }
+
     }
 
     public void updateAllAddresses() {
@@ -126,7 +136,7 @@ public class Main extends ListActivity {
     private void updateTotalWorth() {
         new CalculateTotalWorthTask().execute();
         TextView tv = (TextView) findViewById(R.id.total_txt);
-        tv.setText(String.format("%0.2f",totalWorth));
+        tv.setText(String.format("%0.2f", totalWorth));
     }
 
     private void updateAddressBalance(AddressBalance balance) {
@@ -231,6 +241,29 @@ public class Main extends ListActivity {
         @Override
         protected void onPostExecute(List<PriceQuery> rates) {
             calculateTotalWorth(rates);
+        }
+
+    }
+
+    private class APITask extends AsyncTask<String, Void, AddressImport> {
+
+        @Override
+        protected AddressImport doInBackground(String... inputAddress) {
+            KoinTrakAPIImpl koinAPI = new KoinTrakAPIImpl();
+            try {
+                AddressImport addr = koinAPI.getAddressFromCode(inputAddress[0]);
+                if (addr != null) {
+                    return addr;
+                }
+                return null;
+            } catch (Exception err){
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(AddressImport addrin) {
+            registerAddress(null,addrin.getData());
         }
 
     }
