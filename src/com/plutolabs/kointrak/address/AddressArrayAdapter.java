@@ -30,7 +30,7 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressField> {
         this.resource = resource;
     }
 
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
+    @Override public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(resource, parent, false);
 
@@ -39,7 +39,9 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressField> {
         addressView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "clicked", Toast.LENGTH_LONG).show();
+                Main main = (Main) v.getContext();
+                AddressField addressField = values.get(position);
+                main.switchToTransactionActivity(addressField);
             }
         });
         addressView.setText(values.get(position).getAddress());

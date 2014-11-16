@@ -3,10 +3,12 @@ package com.plutolabs.kointrak.address;
 import so.chain.entity.Address;
 import so.chain.entity.Network;
 
+import java.io.Serializable;
+
 /**
  * @author ct.
  */
-public class AddressField {
+public class AddressField implements Serializable {
 
     private final Network icon;
     private final String address;

@@ -1,9 +1,11 @@
 package com.plutolabs.kointrak.address;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.RegisterStatus;
 import com.plutolabs.kointrak.impl.KoinTrakImpl;
+import com.plutolabs.kointrak.transactions.TransactionActivity;
 import so.chain.entity.*;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import java.util.Set;
 
 public class Main extends ListActivity {
 
+    public static final String CLICKED_ADDRESS = "CLICKED_ADDRESS";
     private KoinTrak koinTrak;
     private double totalWorth;
 
@@ -138,6 +142,14 @@ public class Main extends ListActivity {
             }
         }
         this.totalWorth = totalWorth;
+    }
+
+    public void switchToTransactionActivity(AddressField addressField) {
+        Intent intent = new Intent(this, TransactionActivity.class);
+//        EditText editText = (EditText) findViewById(R.id.edit_message);
+//        String message = editText.getText().toString();
+        intent.putExtra(CLICKED_ADDRESS, addressField);
+        startActivity(intent);
     }
 
     private class RegisterWalletTask extends AsyncTask<String, Void, AddressBalance> {
