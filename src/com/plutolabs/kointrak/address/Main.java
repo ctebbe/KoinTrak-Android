@@ -84,8 +84,11 @@ public class Main extends ListActivity {
         switch(v.getId()) {
             case R.id.refresh:
                 updateAllAddresses();
+                break;
             case R.id.add_address:
                 Toast.makeText(v.getContext(), "add_address", Toast.LENGTH_LONG).show();
+                break;
+            default:
         }
     }
 
@@ -123,7 +126,7 @@ public class Main extends ListActivity {
     private void updateTotalWorth() {
         new CalculateTotalWorthTask().execute();
         TextView tv = (TextView) findViewById(R.id.total_txt);
-        tv.setText(String.valueOf(totalWorth));
+        tv.setText(String.format("%0.2f",totalWorth));
     }
 
     private void updateAddressBalance(AddressBalance balance) {
@@ -142,13 +145,13 @@ public class Main extends ListActivity {
     private void calculateTotalWorth(List<PriceQuery> rates) {
         double totalWorth = 0.0;
         if (rates != null) {
-            Toast.makeText(this, "rates size: " + rates.size(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "rates size: " + rates.size(), Toast.LENGTH_LONG).show();
             for (PriceQuery query : rates) {
                 ArrayList<Price> differentExchanges = query.getPrices();
                 if (differentExchanges.size() > 0) {
                     // grab the first one for now
                     totalWorth += Double.valueOf(differentExchanges.get(0).getPrice());
-                    Toast.makeText(this, "total worth is: " + totalWorth + ", ", Toast.LENGTH_LONG).show();
+             //       Toast.makeText(this, "total worth is: " + totalWorth + ", ", Toast.LENGTH_LONG).show();
                 }
             }
         }
