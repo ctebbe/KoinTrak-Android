@@ -138,7 +138,9 @@ public class Main extends ListActivity {
                 ArrayList<Price> differentExchanges = query.getPrices();
                 if (differentExchanges.size() > 0) {
                     // grab the first one for now
-                    totalWorth += Double.valueOf(differentExchanges.get(0).getPrice());
+                    Double exchangeRate = Double.valueOf(differentExchanges.get(0).getPrice());
+                    double coinSum = calculateTotalCoins(query.getNetwork());
+                    totalWorth += exchangeRate * coinSum;
                     Toast.makeText(this, "total worth is: " + totalWorth + ", ", Toast.LENGTH_LONG).show();
                 }
             }
@@ -146,6 +148,17 @@ public class Main extends ListActivity {
         this.totalWorth = totalWorth;
         updateTotalWorth();
     }
+
+    private double calculateTotalCoins(Network network) {
+        double balance = 0;
+        for (AddressField field : listItems) {
+            if (field.getIcon().equals(network)) {
+                balance += field.getBalance();
+            }
+        }
+        return balance;
+    }
+
 
     public void switchToTransactionActivity(AddressField addressField) {
         Intent intent = new Intent(this, TransactionActivity.class);
