@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.plutolabs.kointrak.R;
 import so.chain.entity.Network;
 
@@ -42,6 +41,14 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressField> {
                 Main main = (Main) v.getContext();
                 AddressField addressField = values.get(position);
                 main.switchToTransactionActivity(addressField);
+            }
+        });
+        addressView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                values.remove(position);
+                notifyDataSetChanged();
+                return true;
             }
         });
         addressView.setText(values.get(position).getAddress());

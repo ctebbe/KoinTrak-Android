@@ -126,7 +126,7 @@ public class Main extends ListActivity {
     private void updateTotalWorth() {
         new CalculateTotalWorthTask().execute();
         TextView tv = (TextView) findViewById(R.id.total_txt);
-        tv.setText(String.format("%0.2f",totalWorth));
+        tv.setText(String.format("$%.2f USD",totalWorth));
     }
 
     private void updateAddressBalance(AddressBalance balance) {
