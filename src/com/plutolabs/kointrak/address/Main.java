@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.RegisterStatus;
@@ -54,10 +55,26 @@ public class Main extends ListActivity {
                 inputAddress();
             }
         });
+
+        
+        findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateAllAddresses();
+            }
+        });
     }
 
     private void inputAddress() {
 
+    }
+
+    public void buttonClick(View v) {
+        Toast.makeText(v.getContext(), "refreshed", Toast.LENGTH_LONG).show();
+        switch(v.getId()) {
+            case R.id.refresh:
+                Toast.makeText(v.getContext(), "refreshed", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void registerAddress(View view) {
@@ -72,7 +89,7 @@ public class Main extends ListActivity {
         }
     }
 
-    public void updateAllAddresses(View view) {
+    public void updateAllAddresses() {
         Map<Network, Set<Address>> registeredAddresses = koinTrak.getRegisteredAddresses();
         for (Map.Entry<Network, Set<Address>> entry : registeredAddresses.entrySet()) {
             for (Address address : entry.getValue()) {
