@@ -49,11 +49,6 @@ public class Main extends ListActivity {
 
         koinTrak = KoinTrakImpl.getInstance();
 
-        ListView lv = getListView();
-        lv.setAdapter(adapter);
-        View footer = getLayoutInflater().inflate(R.layout.address_footer,null);
-        lv.addFooterView(footer);
-
         ImageView addAddress = ((ImageView) findViewById(R.id.add_address));
         addAddress.setOnTouchListener(new View.OnTouchListener() {
             @Override
