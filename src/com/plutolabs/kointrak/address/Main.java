@@ -1,15 +1,15 @@
 package com.plutolabs.kointrak.address;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.plutolabs.kointrak.KoinTrak;
 import com.plutolabs.kointrak.R;
 import com.plutolabs.kointrak.RegisterStatus;
@@ -48,9 +48,6 @@ public class Main extends ListActivity {
         setListAdapter(adapter);
 
         koinTrak = KoinTrakImpl.getInstance();
-        //registerAddress(null, null);
-
-        new APITask().execute("559951");
 
         ListView lv = getListView();
         lv.setAdapter(adapter);
@@ -80,8 +77,8 @@ public class Main extends ListActivity {
         });
     }
 
-    private void inputAddress() {
-
+    private void inputAddressFromKoinTrakCloud(String addressKey) {
+        new APITask().execute(addressKey);
     }
 
     public void buttonClick(View v) {
@@ -91,6 +88,25 @@ public class Main extends ListActivity {
                 break;
             case R.id.add_address:
                 //Toast.makeText(v.getContext(), "add_address", Toast.LENGTH_LONG).show();
+                final EditText editText = new EditText(this);
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                new AlertDialog.Builder(this)
+                        .setTitle("KoinTrak address key entry")
+                        .setMessage("Enter KoinTrak.com address key:")
+                        .setView(editText)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                String addressKey = editText.getText().toString();
+                                inputAddressFromKoinTrakCloud(addressKey);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                            }
+                        })
+                        .show();
+
                 break;
             default:
         }
